@@ -33,7 +33,7 @@ func main() {
 	messages := []models.Message{
 		{
 			Role:    "user",
-			Content: "Что будет через 10 лет в мире?",
+			Content: "скажи что я молодец",
 		},
 	}
 
