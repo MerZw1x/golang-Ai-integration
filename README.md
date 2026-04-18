@@ -17,9 +17,43 @@ OPENROUTER_MODEL=google/gemma-4-31b-it:free
 OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
 ```
 
-### 3.1 Выделяем модели
+### 3.1 Модель для запроса в OpenRouter
 
-### 3.2 Пример кода
+```go
+type ChatRequest struct {
+	Model       string    `json:"model"`
+	Messages    []Message `json:"messages"`
+	Stream      bool      `json:"stream,omitempty"`
+	MaxTokens   int       `json:"max_tokens,omitempty"`
+	Temperature float64   `json:"temperature,omitempty"`
+}
+```
+```Stream == true``` -> если мы хотим получать ответ раздельными словами(а не целиком)
+```Stream == false``` -> если мы готовы немножко подождать и получить 
+
+Temperature -> про креативность ответа(чем больше, тем креативнее ответ)
+
+### 3.2 Необходимый формат POST запроса в OpenRouter
+
+```bash
+curl https://openrouter.ai/api/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $OPENROUTER_API_KEY" \
+  -d '{
+  "model": "google/gemma-4-31b-it:free",
+  "messages": [
+    {
+      "role": "user",
+      "content": "How many r`s are in the word `strawberry?`"
+    }
+  ],
+  "reasoning": {
+    "enabled": true
+  }
+}
+```
+
+### 3.3 Пример кода
 
 ```go
 	// Подготовка запросов
@@ -46,7 +80,7 @@ OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
 	}
 ```
 
-### 3.3 Пример с несколькими запросами
+### 3.4 Пример с несколькими запросами
 
 ```go
 messages := []models.Message{
@@ -56,7 +90,7 @@ messages := []models.Message{
 }
 ```
 
-## Конфигурация (.env)
+## Конфигурация
 
 | Переменная                | Описание                           | Обязательно | Пример значения                     |
 |---------------------------|------------------------------------|-------------|-------------------------------------|
@@ -69,7 +103,7 @@ messages := []models.Message{
 
 ### Лучшие бесплатные модели на данный момент:
 
-- **`google/gemma-4-31b-it:free`** ← **твоя текущая модель** (рекомендуется)
+- **`google/gemma-4-31b-it:free`**
 - `meta-llama/llama-4-maverick:free`
 - `meta-llama/llama-4-scout:free`
 - `deepseek/deepseek-chat-v3-0324:free`
