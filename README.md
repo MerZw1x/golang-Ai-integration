@@ -29,6 +29,7 @@ type ChatRequest struct {
 }
 ```
 ```Stream == true``` -> если мы хотим получать ответ раздельными словами(а не целиком)
+
 ```Stream == false``` -> если мы готовы немножко подождать и получить 
 
 Temperature -> про креативность ответа(чем больше, тем креативнее ответ)
@@ -84,9 +85,9 @@ curl https://openrouter.ai/api/v1/chat/completions \
 
 ```go
 messages := []models.Message{
-	{Role: "system", Content: "Ты полезный и весёлый помощник."},
-	{Role: "user",   Content: "Привет!"},
-	{Role: "user",   Content: "Расскажи шутку про программистов"},
+	{Role: "system", Content: "Как тебе название Midray?"},
+	{Role: "user",   Content: "Midray top"},
+	{Role: "user",   Content: "..."},
 }
 ```
 
